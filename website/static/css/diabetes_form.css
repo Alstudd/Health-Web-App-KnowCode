@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url(../images/bg2.jpeg) no-repeat center center fixed;
+    background-size: 1540px 800px;
+}
+
+.my_container {
+    color: white;
+    position: absolute;
+    top: 20%;
+    left: 10%;
+}
+
+::placeholder {
+    color: azure;
+}
+
+.my_container h1 {
+    font-family: 'Lato', sans-serif;
+    width: 50%;
+    display: inline-block;
+    font-size: 40px;
+    border-bottom: 5px solid lightblue;
+    margin-bottom: 15px;
+    padding: 13px 0;
+}
+
+.box {
+    width: 100%;
+    margin: 22px 0;
+    border-bottom: 2px solid lightblue;
+}
+
+.box input {    
+    background: none;
+    width: 75%;
+    padding: 5px 10px;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    color: white;
+}
+
+.box i {
+    width: 25px;
+    text-align: center;
+}
+
+.btn {
+    font-family: 'Lato', sans-serif;
+    cursor: pointer;
+    outline: none;
+    margin: 12px 0;
+    border-radius: 10px;
+    padding: 10px 21px;
+    border: 2px solid lightblue;
+    font-size: 18px;
+    font-weight: bold;
+    background: none;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.8;
+    color: rgb(18, 174, 226);
+    background: white; 
+}
