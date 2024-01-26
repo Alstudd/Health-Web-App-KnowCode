@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/Form.css">
+    <link rel="stylesheet" href="/static/css/chatbot.css">
+    <link rel="icon" href="{{url_for('static', filename='images/SwasthLogo.png')}}">
+    <script src="https://kit.fontawesome.com/184d4e2021.js" crossorigin="anonymous"></script>
+    <title>Heart Disease Prediction</title>
+</head>
+
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'error' %}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="container text-center">
+
+        <div class="row align-items-start">
+            <div class="col">
+                <div class="login-page">
+                    <div class="form">
+                        <h2 class="text-start">Enter Your Details - Heart Disease</h2><br>
+                        <form action="/heart" method="POST" class="login-form">
+                            <div class="row text-center">
+                                <div class="row align-items-start">
+                                    <div class="col">
+                                        <input type="number" step="0" name="age" id="age" placeholder="Enter your age">
+                                        <input type="text" name="sex" id="sex" placeholder="Enter your Gender (M/F)">
+                                        <input type="number" step="0" name="cp" id="cp" placeholder="Chest pain type number ">
+                                        <input type="number" step="0.001" name="rbp" id="rbp" placeholder="Resting blood pressure">
+                                        <input type="number" step="0.001" name="chol" id="chol" placeholder="Serum cholestoral in mg/dI ">
+                                        <input type="number" step="0.001" name="fbs" id="fbs" placeholder="Fasting blood sugar > 120 mg/di">
+                                        <input type="number" step="0.001" name="recg" id="recg" placeholder="Resting electrocardiographic results (values 0,1,2) ">
+
+                                    </div>
+                                    <div class="col">
+                                        
+                                        <input type="number" step="0.001" name="mhra" id="mhra" placeholder="Maximum heart rate achieved ">
+                                        <input type="number" step="0.001" name="exia" id="exia" placeholder="Exercise induced angina">
+                                        <input type="number" step="0.001" name="oldpeak" id="oldpeak" placeholder="ST depression induced by exercise relative to rest">
+                                        <input type="number" step="0.001" name="slope" id="slope" placeholder="The slope of the peak exercise ST segment">
+                                        <input type="number" step="0.001" name="vcf" id="vcf" placeholder="Enter the Number of major vessels (0-3) colored by flourosopy">
+                                        <input type="number" step="0" name="thal" id="thal" placeholder="Enter your Thalassemia">
+
+                                    </div>
+                                    <div class="container text-center">
+                                        <div class="row align-items-start">
+                                            <div class="col">
+
+                                            </div>
+                                            <div class="col">
+                                                <button type="submit" class="btn">Submit</button>
+                                            </div>
+                                            <div class="col">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <img src="static/images/dash.svg" height="600px">
+            </div>
+        </div>
+    </div>
+
+    <div class="my_container">
+        <div class="chatbox">
+            <div class="chatbox_support">
+                <div class="chatbox_header">
+                    <div class="chatbox_image--header">
+                        <img src="https://www.focusedu.org/wp-content/uploads/2018/12/circled-user-male-skin-type-1-2.png"
+                            alt="image" width="100px" height="100px">
+                    </div>
+                    <div class="chatbox_content--header">
+                        <h4 class="chatbox_heading--header">Chat Support</h4>
+                        <p class="chatbox_description--header">Hi, I'm Swasth-ChatBot. <br>How can I help you?
+                        </p>
+                    </div>
+                </div>
+                <div id="chatbot-conversation" class="chatbox_messages">
+                    <div></div>
+                </div>
+                <div class="chatbox_footer">
+                    <input id="chatbot-input" type="text" placeholder="Write a message...">
+                    <button id="chatbot-submit" class="chatbox_send--footer send_button">Send</button>
+                </div>
+            </div>
+            <div class="chatbox_button">
+                <button><img
+                        src="https://images.squarespace-cdn.com/content/v1/598c1a6b46c3c4a7b18a8908/f3c4acee-fe02-442b-b1e5-bcf2eabd6c34/Chatbot_Icon.png"
+                        alt="image" width="50px" height="50px"></button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $SCRIPT_ROOT = '{{ request.script_root|tojson }}';
+    </script>
+    <script type="text/javascript" src="static/js/chatbot.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/base.js') }}"></script>
+    <script type="text/javascript" src="{% block extra_js1 %} {% endblock extra_js1 %}"></script>
+</body>
+
+</html>
