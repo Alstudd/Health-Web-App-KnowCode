@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% block extra_css1 %} {% endblock extra_css1 %}">
+    {% block extra_css2 %} {% endblock extra_css2 %}
+    <link rel="stylesheet" href="static/css/base.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="icon" href="{{url_for('static', filename='images/SwasthLogo.png')}}">
+    <script src="https://kit.fontawesome.com/184d4e2021.js" crossorigin="anonymous"></script>
+    <title>{% block title %} {% endblock title %}</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg myshadow">
+        <div class="container-fluid">
+            <a style="display: flex;" class="navbar-brand" href="#">
+            <img src="static/images/SwasthLogo.png" height="50px" , width="60px">
+                <h3 style="position: absolute; left: 110px; top: 30%; color: green; font-weight: 600;">SWASTH</h3>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse flex-grow-0 px-5" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if (user.is_authenticated) and (user.id != 1) %}
+                    <li class="nav-item">
+                        <a style="padding-top: 12px;" class="nav-link active" id="home" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="padding-top: 12px;" class="nav-link" href="/about">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <img class="nav-link" src="static/images/avatar.png" class="user"
+                            style="width: 53px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; justify-content: flex-end;"
+                            onclick="toggleMenu()">
+                        <div class="sub-menu-wrap" id="subMenu">
+                            <div class="sub-menu">
+                                <div class="user-info">
+                                    <img src="static/images/avatar.png">
+                                    <h5>{{user.username}}</h5>
+                                </div>
+                                <hr>
+                                <a href="/fill_details" class="sub-menu-link" style="text-decoration: none;">
+                                    <i class="fa-solid fa-user"></i>
+                                    <p>Edit Profile</p>
+                                    <span>></span>
+                                </a>
+                                <a href="/dashboard" class="sub-menu-link" style="text-decoration: none;">
+                                    <i class="fa-solid fa-gear"></i>
+                                    <p>Dashboard</p>
+                                    <span>></span>
+                                </a>
+                                <a href="/fill_details" class="sub-menu-link" style="text-decoration: none;">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                    <p>Fill Your Details</p>
+                                    <span>></span>
+                                </a>
+                                <a href="/logout" class="sub-menu-link" style="text-decoration: none;">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    <p>Logout</p>
+                                    <span>></span>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <div class="nav-link">
+                            <div class="switch">
+                                <div class="flicker"></div>
+                                <div class="moon"></div>
+                            </div>
+                        </div>
+                    </li> -->
+                    {% elif user.id == 1 %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin_board">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <img class="nav-link" src="static/images/avatar.png" class="user"
+                            style="width: 53px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; justify-content: flex-end;"
+                            onclick="toggleMenu()">
+                        <div class="sub-menu-wrap" id="subMenu">
+                            <div class="sub-menu">
+                                <div class="user-info">
+                                    <img src="static/images/avatar.png">
+                                    <h5>{{user.username}}</h5>
+                                </div>
+                                <hr>
+                                <a href="/dashboard" class="sub-menu-link" style="text-decoration: none;">
+                                    <i class="fa-solid fa-gear"></i>
+                                    <p>Dashboard</p>
+                                    <span>></span>
+                                </a>
+                                <a href="/logout" class="sub-menu-link" style="text-decoration: none;">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    <p>Logout</p>
+                                    <span>></span>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" id="logout" href="/logout">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a style="color:black;" class="nav-link" id="capture" href="/emergency_popup">Emergency</a></li>
+                    <li class="nav-item"><a style="color:black;" class="nav-link" id="capture" href="/capture">Meet The Doc</a></li>
+                    <li class="nav-item"><a style="color:black;" class="nav-link" id="login" href="/login">Login</a></li>
+                    <li class="nav-item"><a style="color:black;" class="nav-link" id="signUp" href="/sign-up">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'error' %}
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% block content %}
+
+    {% endblock content %}
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/base.js') }}"></script>
+    <script type="text/javascript" src="{% block extra_js1 %} {% endblock extra_js1 %}"></script>
+</body>
+
+</html>
