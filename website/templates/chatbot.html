@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHATBOT</title>
+    <link rel="stylesheet" href="static/css/chatbot.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="my_container">
+        <div class="chatbox">
+            <div class="chatbox_support">
+                <div class="chatbox_header">
+                    <div class="chatbox_image--header">
+                        <img src="https://images.squarespace-cdn.com/content/v1/598c1a6b46c3c4a7b18a8908/f3c4acee-fe02-442b-b1e5-bcf2eabd6c34/Chatbot_Icon.png"
+                            alt="image" width="100px" height="100px">
+                    </div>
+                    <div class="chatbox_content--header">
+                        <h4 class="chatbox_heading--header">Chat Support</h4>
+                        <p class="chatbox_description--header">Hi, I'm Swasth-ChatBot. <br>How can I help you?
+                        </p>
+                    </div>
+                </div>
+                <div id="chatbot-conversation" class="chatbox_messages">
+                    <div>
+                    </div>
+                </div>
+                <form action="chatbotSubmit" method="POST" class="chatbox_footer">
+                    <input name="chatbot-input" id="chatbot-input" type="text" placeholder="Write a message...">
+                    <button type="submit" id="chatbot-submit" class="chatbox_send--footer send_button">Send</button>
+                </form>
+            </div>
+            <div class="chatbox_button">
+                <button><img
+                        src="https://images.squarespace-cdn.com/content/v1/598c1a6b46c3c4a7b18a8908/f3c4acee-fe02-442b-b1e5-bcf2eabd6c34/Chatbot_Icon.png"
+                        alt="image" width="50px" height="50px"></button>
+            </div>
+        </div>
+    </div>
+    <script>
+        $SCRIPT_ROOT = '{{ request.script_root|tojson }}';
+    </script>
+    <script type="text/javascript" src="static/js/chatbot.js"></script>
+</body>
+</html>
