@@ -2,13 +2,6 @@
 pragma solidity ^0.8.0;
 
 contract Records {
-    address public owner;
-    
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Not the owner");
-        _;
-    }
-
     struct RecordItem {
         uint256 timestamp;
         string userId;
@@ -19,11 +12,11 @@ contract Records {
 
     event ItemAdded(uint256 indexed timestamp, string indexed userId, string indexed adminId);
 
-    constructor() {
-        owner = msg.sender;
-    }
+    // constructor() {
+    //     owner = msg.sender;
+    // }
 
-    function addItem(string memory _userId, string memory _adminId) external onlyOwner {
+    function addItem(string memory _userId, string memory _adminId) external  {
         uint256 timestamp = block.timestamp; // Current time
 
         RecordItem memory newItem = RecordItem(timestamp, _userId, _adminId);
@@ -37,10 +30,10 @@ contract Records {
         uint256 counter = 0;
 
         for (uint256 i = 0; i < recordList.length; i++) {
-            if (msg.sender == owner) {
+            // if (msg.sender == owner) {
                 userItems[counter] = recordList[i];
                 counter++;
-            }
+            // }
         }
 
         // Create a new array with only the relevant items
