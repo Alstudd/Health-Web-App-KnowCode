@@ -1,0 +1,69 @@
+{% extends 'base2.html' %}
+{% block extra_css2 %}
+<link rel="stylesheet" href="static/css/fill_details.css">
+<link rel=" stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+	integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock extra_css2 %}
+{% block title %} File Storage {% endblock title %}
+{% block storage %} active {% endblock storage %}
+{% block head1 %} File Storage {% endblock head1 %}
+{% block head2 %} File Storage {% endblock head2 %}
+{% block content %}
+<div>
+	<h2>Your Medical Records</h2>
+</div>
+<div class="my-5">
+	<button type="button" class="btn bg-primary text-white px-3 shadow" id="utPic">
+		<i class="fas fa-file-upload mr-2"></i>Upload Files
+	</button>
+	<form id="uploadFile" method="post" action="/uploadFile" enctype="multipart/form-data">
+		<input type="hidden" name="_token" :value="token">
+		<input id="files" name="image_file" type="file" multiple hidden>
+	</form>
+</div>
+<div class="container my-3">
+    <h2>Your Files</h2>
+    {% if user.storage|length == 0 %}
+    <div class="alert alert-primary" role="alert">
+        No Files found. Add your files now!
+    </div>
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">SNo</th>
+                <th scope="col">Filename</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for st in user.storage %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{st.my_file}}</td>
+                <td>
+                    <a href="static/storage/{{user.username}}/{{st.my_file}}" download><button type="button"
+                            class="btn btn-primary btn-sm mx-1">Download</button></a>
+                    <a href="/store_delete/{{st.id}}"><button type="button"
+                            class="btn btn-primary btn-sm mx-1">Delete</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock content %}
+{% block extra_js2 %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/storage.js') }}"></script>
+{% endblock extra_js2 %}
