@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="{{url_for('static', filename='images/SwasthLogo.png')}}">
+    <!-- My CSS -->
+    <link rel="stylesheet" href="static/css/dashboard.css">
+    <link rel="stylesheet" href="static/css/meditate.css">
+    <link rel="stylesheet" href="static/css/chatbot.css">
+    <link rel="stylesheet" href="static/css/base.css">
+    <script src="static/js/meditate.js"></script>
+    <title>Meditation</title>
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a style="text-decoration: none;" href="#" class="brand">
+            <i class='bx bxs-smile'></i>
+            <span class="text">Swasth</span>
+        </a>
+        <ul class="side-menu p-0 top">
+            <li>
+                <a style="text-decoration: none;" href="/">
+                    <i class='bx bxs-home-alt-2'></i>
+                    <span class="text">Home</span>
+                </a>
+            </li>
+            <li>
+                <a style="text-decoration: none;" href="/fill_details">
+                    <i class='bx bxs-detail'></i>
+                    <span class="text">Profile Details</span>
+                </a>
+            </li>
+            <li>
+                <a style="text-decoration: none;" href="/appoint">
+                    <i class='bx bxs-calendar'></i>
+                    <span class="text">Appointments</span>
+                </a>
+            </li>
+            <li>
+                <a style="text-decoration: none;" href="/dashboard">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a style="text-decoration: none;" href="/storage">
+                    <i class='bx bxs-file'></i>
+                    <span class="text">File Storage</span>
+                </a>
+            </li>
+            <li>
+                <a style="text-decoration: none;" href="/healthcareBot">
+                    <i class='bx bxs-message-rounded-detail'></i>
+                    <span class="text">HealthCare Bot</span>
+                </a>
+            </li>
+            <li class="active">
+                <a style="text-decoration: none;" href="/meditate">
+                    <i class='bx bxs-objects-horizontal-left'></i>
+                    <span class="text">Meditation</span>
+                </a>
+            </li>
+            <li>
+                <a style="text-decoration: none;" href="/lobby" target="_blank">
+                    <i class='bx bxs-message-dots'></i>
+                    <span class="text">VideoChat</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="side-menu p-0">
+            <li>
+                <a style="text-decoration: none;" href="/about">
+                    <i class='bx bxs-user-detail'></i>
+                    <span class="text">About Us</span>
+                </a>
+            </li>
+            <li>
+                <a style="text-decoration: none;" href="/logout" class="logout">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+
+
+    <!-- CONTENT -->
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a href="/note" class="nav-link">Notes</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <input type="checkbox" id="switch-mode" hidden>
+            <label for="switch-mode" class="switch-mode"></label>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell'></i>
+                <span class="num">0</span>
+            </a>
+            <a style="text-decoration: none;" href="#" class="profile">
+                <img src="static/profile_pics/{{user.username}}.{{user.filetype}}" onclick="toggleMenu()">
+                <div class="sub-menu-wrap" id="subMenu">
+                    <div class="sub-menu">
+                        <div class="user-info">
+                            <img class="p-0 mr-2" src="static/profile_pics/{{user.username}}.{{user.filetype}}">
+                            <h5 class="px-2 py-1">{{user.username}}</h5>
+                        </div>
+                        <hr>
+                        <a href="/fill_details" class="sub-menu-link" style="text-decoration: none;">
+                            <i class="fa-solid fa-user"></i>
+                            <p>Edit Profile</p>
+                            <span>></span>
+                        </a>
+                        <a href="/dashboard" class="sub-menu-link" style="text-decoration: none;">
+                            <i class="fa-solid fa-gear"></i>
+                            <p>Dashboard</p>
+                            <span>></span>
+                        </a>
+                        <a href="/fill_details" class="sub-menu-link" style="text-decoration: none;">
+                            <i class="fa-solid fa-file-lines"></i>
+                            <p>Fill Your Details</p>
+                            <span>></span>
+                        </a>
+                        <a href="/logout" class="sub-menu-link" style="text-decoration: none;">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <p>Logout</p>
+                            <span>></span>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+	{% if messages %}
+	{% for category, message in messages %}
+	{% if category == 'error' %}
+	<div class="alert alert-danger alter-dismissable fade show" role="alert">
+		{{ message }}
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	{% else %}
+	<div class="alert alert-success alter-dismissable fade show" role="alert">
+		{{ message }}
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	{% endif %}
+	{% endfor %}
+	{% endif %}
+	{% endwith %} -->
+
+        <!-- MAIN -->
+        <main>
+            <div class="head-title">
+                <div class="left">
+                    <h1>Refresh Your Mind</h1>
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="#">Meditate</a>
+                        </li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li>
+                            <a style="text-decoration: none;" class="active" href="/">Home</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <audio id="aud" style="display: none;" controls loop>
+                <source src="static/media/Heart-Of-The-Ocean.mp3" type="audio/mpeg" />
+              </audio>
+            <div class="container">
+                <h1>Meditate</h1>
+                <div class="timer-display">00:00:00</div>
+                <div style="font-size: 20px;" class="inputfortime">
+                    <label for="duration-input">Timer duration (in minutes):</label>
+                    <!-- we are going the cap the input value we are going to accept the time in minutes and minimum time is 1 min and maximum is 2 hour -->
+                    <input style="font-size: 20px; text-align: center;" type="number" id="duration-input" name="duration-input" min="1" max="120" step="1"
+                        value="10">
+                </div>
+                <button id="start-button" class="start-btn">Start</button>
+                <button id="stop-button" class="stop-btn">Stop</button>
+            </div>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+
+    <div class="my_container">
+		<div class="chatbox">
+			<div class="chatbox_support">
+				<div class="chatbox_header">
+					<div class="chatbox_image--header">
+						<img src="https://images.squarespace-cdn.com/content/v1/598c1a6b46c3c4a7b18a8908/f3c4acee-fe02-442b-b1e5-bcf2eabd6c34/Chatbot_Icon.png"
+							alt="image" width="100px" height="100px">
+					</div>
+					<div class="chatbox_content--header">
+						<h4 class="chatbox_heading--header">Chat Support</h4>
+						<p class="chatbox_description--header">Hi, I'm Swasth-ChatBot. <br>How can I help you?
+						</p>
+					</div>
+				</div>
+				<div id="chatbot-conversation" class="chatbox_messages">
+					<div></div>
+				</div>
+				<div class="chatbox_footer">
+					<input id="chatbot-input" type="text" placeholder="Write a message...">
+					<button id="chatbot-submit" class="chatbox_send--footer send_button">Send</button>
+				</div>
+			</div>
+			<div class="chatbox_button">
+				<button><img
+						src="https://images.squarespace-cdn.com/content/v1/598c1a6b46c3c4a7b18a8908/f3c4acee-fe02-442b-b1e5-bcf2eabd6c34/Chatbot_Icon.png"
+						alt="image" width="50px" height="50px"></button>
+			</div>
+		</div>
+	</div>
+    <script>
+        $SCRIPT_ROOT = '{{ request.script_root|tojson }}';
+    </script>
+    <script type="text/javascript" src="static/js/chatbot.js"></script>
+    <script src="static/js/dashboard.js"></script>
+    <script>
+        var startButton = document.getElementById('start-button');
+        var stopButton = document.getElementById('stop-button');
+        var timerInterval;
+        var duration = 0;
+        // using the event listener to call the operations using the call back function
+        startButton.addEventListener('click', function () {
+            startTimer();
+        });
+
+        stopButton.addEventListener('click', function () {
+            stopTimer();
+        });
+
+        let playBtn = document.getElementsByClassName("start-btn");
+        let pauseBtn = document.getElementsByClassName("stop-btn");
+
+        // const audio = new Audio("static/media/Heart-Of-The-Ocean.mp3");
+        const audio = document.getElementById('aud');
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            duration = document.getElementById('duration-input').value;
+            var timerDisplay = document.querySelector('.timer-display');
+            var startTime = new Date().getTime();
+            var endTime = startTime + duration * 60 * 1000;
+
+            timerInterval = setInterval(function () {
+                var now = new Date().getTime();
+                var timeRemaining = Math.max(0, endTime - now);
+                var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+                var display = '';
+                // here we are using conditionals to make the decision
+                if (hours < 10) {
+                    display += '0' + hours + ':';
+                } else {
+                    display += hours + ':';
+                }
+
+                if (minutes < 10) {
+                    display += '0' + minutes + ':';
+                } else {
+                    display += minutes + ':';
+                }
+
+                if (seconds < 10) {
+                    display += '0' + seconds;
+                } else {
+                    display += seconds;
+                }
+
+                timerDisplay.innerHTML = display;
+
+                if (timeRemaining === 0) {
+                    clearInterval(timerInterval);
+                    audio.pause();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            duration = 0;
+            document.querySelector('.timer-display').innerHTML = '00:00:00';
+        }
+
+        playBtn[0].addEventListener("click", (e) => {
+                audio.play();  
+        });
+
+        pauseBtn[0].addEventListener("click", (e) => {
+            audio.pause();
+        });
+        
+    </script>
+</body>
+
+</html>

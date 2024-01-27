@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{url_for('static', filename='images/SwasthLogo.png')}}">
+    <title>Map</title>
+</head>
+
+<body>
+    <iframe src="/user_location" frameborder="0" width = "100%" height = "700px"></iframe>
+    <!-- <button><a onclick="printExternal('/user_location')">Map</a></button>
+    <script>
+        function printExternal(url) {
+            var printWindow = window.open(url, 'left=200, top=200, width=950, height=500, toolbar=0, resizable=0');
+
+            printWindow.addEventListener('load', function () {
+                if (Boolean(printWindow.chrome)) {
+                    printWindow.print();
+                    setTimeout(function () {
+                        printWindow.close();
+                    }, 500);
+                } else {
+                    printWindow.print();
+                    printWindow.close();
+                }
+            }, true);
+        }
+    </script> -->
+</body>
+
+</html>

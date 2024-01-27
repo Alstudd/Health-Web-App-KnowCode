@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup</title>
+    <link rel="icon" href="{{url_for('static', filename='images/SwasthLogo.png')}}">
+    <link rel="stylesheet" href="static/css/emergency_popup.css">
+</head>
+<body>  
+    <div class="popup">
+        <img src="{{url_for('static', filename='images/Urgent-bro.svg')}}" />
+        <button onClick="history_back()"><</button>
+        <h2>Emergency Popup</h2>
+        <br>
+        <a href="/emer_reg_user" style="width: 240px; font-size: 18px;">Registered User</a>
+        <h3><b>OR</b></h3>
+        <a href="/emer_non_reg_user" style="width: 240px; font-size: 18px;">Non-Registered User</a>
+    </div>
+    <script src="static/js/emergency_popup.js"></script>
+    <script>
+        function history_back(){
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

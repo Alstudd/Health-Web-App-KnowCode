@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="static/css/home.css">
+  <link rel="stylesheet" href="static/css/base.css">
+  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="static/css/chatbot.css">
+  <link rel="icon" href="{{url_for('static', filename='images/SwasthLogo.png')}}">
+  <script src="https://kit.fontawesome.com/184d4e2021.js" crossorigin="anonymous"></script>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <!-- My CSS -->
+  <link rel="stylesheet" href="static/css/dashboard.css">
+  <title>Anaytical MedTests</title>
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+      <a style="text-decoration: none;" href="#" class="brand">
+          <i class='bx bxs-smile'></i>
+          <span class="text">Swasth</span>
+      </a>
+      <ul class="side-menu top">
+          <li>
+              <a style="text-decoration: none;" href="/admin">
+                  <i class='bx bxs-dashboard'></i>
+                  <span class="text">Admin Page</span>
+              </a>
+          </li>
+          <li>
+              <a style="text-decoration: none;" href="/records">
+                  <i class='bx bxs-doughnut-chart'></i>
+                  <span class="text">Recognition AI Records</span>
+              </a>
+          </li>
+          <li class="active">
+              <a style="text-decoration: none;" href="/listPatient">
+                  <i class='bx bx-list-ul'></i>
+                  <span class="text">Patient List</span>
+              </a>
+          </li>
+          <li>
+              <a style="text-decoration: none;" href="/lobby" target="_blank">
+                  <i class='bx bxs-message-dots'></i>
+                  <span class="text">VideoChat</span>
+              </a>
+          </li>
+      </ul>
+      <ul class="side-menu">
+          <li>
+              <a style="text-decoration: none;" href="#">
+                  <i class='bx bxs-cog'></i>
+                  <span class="text">Settings</span>
+              </a>
+          </li>
+          <li>
+              <a style="text-decoration: none;" href="/logout" class="logout">
+                  <i class='bx bxs-log-out-circle'></i>
+                  <span class="text">Logout</span>
+              </a>
+          </li>
+      </ul>
+  </section>
+  <!-- SIDEBAR -->
+
+
+
+ <!-- CONTENT -->
+ <section id="content">
+  <!-- NAVBAR -->
+  <nav>
+      <i class='bx bx-menu'></i>
+      <a href="/user_map" target="_blank" class="nav-link">Map</a>
+      <form action="#">
+          <div class="form-input">
+              <input type="search" placeholder="Search...">
+              <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+          </div>
+      </form>
+      <input type="checkbox" id="switch-mode" hidden>
+      <label for="switch-mode" class="switch-mode"></label>
+      <a href="#" class="notification">
+          <i class='bx bxs-bell'></i>
+          <span class="num">0</span>
+      </a>
+      <a style="text-decoration: none;" href="#" class="profile">
+          <img src="static/profile_pics/{{user.username}}.{{user.filetype}}" width="50" height="50" onclick="toggleMenu()">
+          <div class="sub-menu-wrap" id="subMenu">
+              <div class="sub-menu" style="max-height: 500px;">
+                  <div class="user-info">
+                      <img class="p-0 mr-2" src="static/profile_pics/{{user.username}}.{{user.filetype}}">
+                      <h5>{{user.username}}</h5>
+                  </div>
+                  <hr>
+                  <!-- <a href="#" class="sub-menu-link" style="text-decoration: none;">
+                      <i class="fa fa-gear"></i>
+                      <p>Settings</p>
+                      <span>></span>
+                  </a> -->
+                  <a href="/logout" class="sub-menu-link" style="text-decoration: none;">
+                      <i class="fa fa-external-link"></i>
+                      <p>Logout</p>
+                      <span>></span>
+                  </a>
+              </div>
+          </div>
+      </a>
+
+  </nav>
+  <!-- NAVBAR -->
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  {% for category, message in messages %}
+  {% if category == 'error' %}
+  <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  {% else %}
+  <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message }}
+      <button type="button" class="close" data-dismiss="alert">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+    
+        <!-- MAIN -->
+    <main>
+        <div class="head-title">
+          <div class="left">
+            <h1>Analytical MedTest</h1>
+            <ul class="breadcrumb">
+              <li>
+                <a href="#">Analytical MedTest</a>
+              </li>
+              <li><i class='bx bx-chevron-right'></i></li>
+              <li>
+                <a style="text-decoration: none;" class="active" href="/admin">Home</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+            <form method="POST">
+                <div class="container text-center">
+                    <br>
+                    <div><h2 style="font-weight: 500;">Find out whether you might have...</h2></div>
+                    <br>
+                    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+                        <div class="col">
+                            <div class="card rounded-2 p-3" style="border-radius: 10%;">
+                                <img class="px-2" style="position: relative; left: 40px;" src="static/images/diabetes.png" height="200px" width="250px">
+                                <div class="px-4">
+                                    <button type="link" class="button w-100 text-dark"><a href="/diabetes" target="_blank"
+                                            style="text-decoration: none; color: black;">Diabetes</a></button>
+                                </div>
+                                <br>   
+                            </div>                                                                
+                        </div>
+                        <div class="col">
+                            <div class="card rounded-2 p-3" style="border-radius: 10%;">
+                                <img src="static/images/heart.svg" height="200px" >
+                                <div class="px-4">
+                                    <button type="link" class="button w-100 text-dark"><a href="/heart" target="_blank"
+                                            style="text-decoration: none; color: black;">Heart Disease</a></button>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card rounded-2 p-3" style="border-radius: 10%;">
+                                <img src="static/images/parkinsons.svg" height="200px">
+                                <div class="px-4">
+                                    <button type="link" class="button w-100 text-dark"><a href="/park" target="_blank"
+                                                style="text-decoration: none; color: black;">Parkinsons</a></button>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </form>
+        </main>
+        <!-- MAIN -->
+    </section>
+    <!-- CONTENT -->
+
+    <div class="my_container">
+      <div class="chatbox">
+          <div class="chatbox_support">
+              <div class="chatbox_header">
+                  <div class="chatbox_image--header">
+                      <img src="https://images.squarespace-cdn.com/content/v1/598c1a6b46c3c4a7b18a8908/f3c4acee-fe02-442b-b1e5-bcf2eabd6c34/Chatbot_Icon.png"
+                          alt="image" width="100px" height="100px">
+                  </div>
+                  <div class="chatbox_content--header">
+                      <h4 class="chatbox_heading--header">Chat Support</h4>
+                      <p class="chatbox_description--header">Hi, I'm Swasth-ChatBot. <br>How can I help you?
+                      </p>
+                  </div>
+              </div>
+              <div id="chatbot-conversation" class="chatbox_messages">
+                  <div></div>
+              </div>
+              <div class="chatbox_footer">
+                  <input id="chatbot-input" type="text" placeholder="Write a message...">
+                  <button id="chatbot-submit" class="chatbox_send--footer send_button">Send</button>
+              </div>
+          </div>
+          <div class="chatbox_button">
+              <button><img
+                      src="https://images.squarespace-cdn.com/content/v1/598c1a6b46c3c4a7b18a8908/f3c4acee-fe02-442b-b1e5-bcf2eabd6c34/Chatbot_Icon.png"
+                      alt="image" width="50px" height="50px"></button>
+          </div>
+      </div>
+  </div>
+  <script src="static/js/dashboard.js"></script>
+  <script>
+      $SCRIPT_ROOT = '{{ request.script_root|tojson }}';
+  </script>
+  <script type="text/javascript" src="static/js/chatbot.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/base.js') }}"></script>
+    <script type="text/javascript" src="{% block extra_js1 %} {% endblock extra_js1 %}"></script>
+</body>
+
+</html>

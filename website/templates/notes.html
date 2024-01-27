@@ -1,0 +1,26 @@
+{% extends 'base2.html' %}
+{% block title %} Notes {% endblock title %}
+{% block head1 %} Notes {% endblock head1 %}
+{% block head2 %} Notes {% endblock head2 %}
+{% block content %}
+<br>
+<h1 style="text-align: center;">Notes</h1>
+<ul class="list-group list-group-flush" id="notes">
+    {% for note in user.notes %}
+        <li class="list-group-item">{{ note.data }}
+            <button type="button" class="close" onclick="deleteNote({{ note.id }})">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </li>
+        <br>
+    {% endfor %}
+</ul>
+<form method="POST">
+    <textarea name="note" id="note" class="form-control"></textarea>
+    <br>
+    <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary">Add Note</button>
+    </div>
+</form>
+{% endblock content %}
+{% block extra_js1 %} {{ url_for('static', filename='js/index.js') }} {% endblock extra_js1 %}
