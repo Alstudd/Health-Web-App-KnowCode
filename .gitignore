@@ -1,0 +1,6 @@
+__pycache__
+.env
+libraries1.txt
+libraries2.txt
+instance/
+.DS_Store
