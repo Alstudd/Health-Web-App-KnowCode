@@ -1,0 +1,44 @@
+    {% extends 'base2.html' %}
+    {% block extra_css1 %}
+    {{ url_for('static', filename='css/healthcareBot.css') }}
+    {% endblock extra_css1 %}
+    {% block title %} HealthCare Bot {% endblock title %}
+    {% block healthcareBot %} active {% endblock healthcareBot %}
+    {% block head1 %} HealthCare Bot {% endblock head1 %}
+    {% block head2 %} WebPage {% endblock head2 %}
+    {% block content %}
+<div class="chatbot-container">
+    <div class="chat-header">HealthCare Chatbot</div>
+    <div class="chat-body" id="chat-body">
+        <div class="message user-message">{{ user_input }}</div>
+        <div class="message bot-message">{{ answer }}</div>
+        <!-- Chat messages will appear here -->
+    </div>
+    <form action="chatbotSubmit" method="POST" class="input-container">
+        <input type="text" name="chatbot-input" id="chatbot-input" placeholder="Type your message...">
+        <button type="submit" id="send-btn">Send</button>
+    </form>
+</div>
+
+<script>
+    function sendMessage() {
+        var userInput = document.getElementById('user-input').value;
+        var chatBody = document.getElementById('chat-body');
+
+        if (userInput.trim() !== '') {
+            // Add user message to the chat body
+            chatBody.innerHTML += '<div class="message user-message">' + userInput + '</div>';
+
+            // Simulate bot response (replace this with actual bot logic)
+            var botResponse = 'This is a simple bot response.';
+            chatBody.innerHTML += '<div class="message bot-message">' + botResponse + '</div>';
+
+            // Clear the input field
+            document.getElementById('user-input').value = '';
+
+            // Scroll to the bottom of the chat body
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+    }
+</script>
+{% endblock content %}

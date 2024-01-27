@@ -1,0 +1,64 @@
+{% extends 'base3.html' %}
+{% block extra_css1 %}
+{{ url_for('static', filename='css/home.css') }}
+{% endblock extra_css1 %}
+{% block title %} Prescriptions {% endblock title %}
+{% block patient_list %} active {% endblock patient_list %}
+{% block head1 %} Prescriptions {% endblock head1 %}
+{% block head2 %} Prescriptions {% endblock head2 %}
+{% block content %}
+<div class="container my-3">
+    <a href="/todo" style="text-decoration: none; color: black;">
+        <h2>Doctor's Prescriptions</h2>
+    </a>
+    <br>
+    <form action="/todo" method="POST">
+        <div class="mb-3">
+            <label for="title" class="form-label">Medicine name</label>
+            <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="desc" class="form-label">Description of medicine intake</label>
+            <input type="text" class="form-control" name="desc" id="desc">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<div class="container my-3">
+    <h2>Your Prescriptions</h2>
+    {% if user.todos|length == 0 %}
+    <div class="alert alert-primary" role="alert">
+        No Prescriptions found. Add your first Prescription for your patient now!
+    </div>
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">SNo</th>
+                <th scope="col">Medicine</th>
+                <th scope="col">Description</th>
+                <th scope="col">Time Created</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for todo in user.todos %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{todo.title}}</td>
+                <td>{{todo.desc}}</td>
+                <td>{{todo.date_created}}</td>
+                <td>
+                    <a href="/update/{{todo.id}}"><button type="button"
+                            class="btn btn-primary btn-sm mx-1">Update</button></a>
+                    <a href="/delete/{{todo.id}}"><button type="button"
+                            class="btn btn-primary btn-sm mx-1">Delete</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock content %}

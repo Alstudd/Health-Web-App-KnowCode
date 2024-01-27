@@ -1,0 +1,79 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+.html, body {
+    font-family: 'DM Serif Text', serif;
+    text-align: start;
+    font-size: medium
+}
+
+  #grad {
+    background-image: linear-gradient(to bottom right, rgba(56, 224, 22, 0.7), rgba(255, 255, 255, 0.7));
+  }
+
+  .next {
+    font-family: 'Secular One', sans-serif;
+    font-size: 4rem;
+    font-weight: 400;
+  }
+
+  .curves {
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+  }
+
+  .myshadow {
+      box-shadow: 0 20px 25px -15px rgba(0, 0, 0, .3);
+  }
+
+  /* .navbar {
+      background-color: black;
+      font-size: large;
+  } */
+
+  h1,
+  h3 {
+      margin-bottom: 1rem;
+      font-weight: normal;
+  }
+
+  .circimg {
+      border-radius: 50%;
+      border: 5px #333 solid;
+      margin-bottom: 1rem;
+  }
+  
+  .buttn {
+    border-radius: 20px;
+      cursor: pointer;
+      display: inline-block;
+      background: blue;
+      border: 10px;
+      border-color: black;
+      color: white;
+      font-size: 18px;
+      border: 0;
+      padding: 0.5rem 1rem;
+  }
+
+  button {
+      border-radius: 40px;
+      cursor: pointer;
+      display: inline-block;
+      background: white;
+      border: 10px;
+      border-color: black;
+      color: black;
+      font-size: 18px;
+      border: 0;
+      padding: 0.5rem 1rem;
+  }
+
+  button:focus {
+      outline: none;
+  }
+
+  button:hover {
+      transform: scale(0.98);
+  }

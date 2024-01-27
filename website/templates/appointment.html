@@ -1,0 +1,68 @@
+{% extends 'base2.html' %}
+{% block extra_css1 %}
+{{ url_for('static', filename='css/home.css') }}
+{% endblock extra_css1 %}
+{% block title %} Appointments {% endblock title %}
+{% block appoint %} active {% endblock appoint %}
+{% block head1 %} Appointments {% endblock head1 %}
+{% block head2 %} Appointments {% endblock head2 %}
+{% block content %}
+<div class="container my-3">
+  <a href="/appoint" style="text-decoration: none; color: black;">
+    <h2>Doctor Appointments</h2>
+  </a>
+  <br>
+  <form action="/appoint" method="POST">
+    <div class="mb-3">
+      <label for="t" class="form-label">Appointment Title</label>
+      <input type="text" class="form-control" name="t" id="t" aria-describedby="emailHelp">
+    </div>
+    <div class="mb-3">
+      <label for="d" class="form-label">Appointment Date</label>
+      <input type="date" class="form-control" name="d" id="d">
+    </div>
+    <div class="mb-3">
+      <label for="time" class="form-label">Appointment Time</label>
+      <input type="time" class="form-control" name="time" id="time">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<div class="container my-3">
+  <h2>Your Appointments</h2>
+  {% if user.appoints|length == 0 %}
+  <div class="alert alert-primary" role="alert">
+    No Appointments found. Add your first Appointment with doctor now!
+  </div>
+  {% else %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">SNo</th>
+        <th scope="col">Title</th>
+        <th scope="col">Scheduled Date</th>
+        <th scope="col">Scheduled Time</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for appointed in user.appoints %}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{appointed.t}}</td>
+        <td>{{appointed.d}}</td>
+        <td>{{appointed.time}}</td>
+        <td>
+          <a href="/appoint_update/{{appointed.id}}"><button type="button"
+              class="btn btn-primary btn-sm mx-1">Update</button></a>
+          <a href="/appoint_delete/{{appointed.id}}"><button type="button"
+              class="btn btn-primary btn-sm mx-1">Delete</button></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+  {% endblock content %}
