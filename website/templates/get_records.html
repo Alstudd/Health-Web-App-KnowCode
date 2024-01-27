@@ -491,6 +491,43 @@
 					</table>
 					{% endif %}
 				</div>
+				<div class="order">
+					<div class="head">
+						<h3 style="padding-left: 13px;">Insurance Policies</h3>
+						<i class='bx bx-search'></i>
+						<i class='bx bx-filter'></i>
+					</div>
+					{% if user.insurance|length == 0 %}
+					<br>
+					<div style="text-align: center;" class="alert alert-primary" role="alert">
+						No Files found. Store your health insurance policies now!
+					</div>
+					{% else %}
+					<table>
+						<thead>
+							<tr>
+								<th style="padding-left: 13px;">SNo</th>
+								<th>FileName</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for stor in user.insurance %}
+							<tr>
+								<td>
+									<span class="circle" style="background-color: #3C91E6;">{{loop.index}}</span>
+								</td>
+								<td>
+									{{stor.my_file}}
+								</td>
+								<td><a href="static/insurance/{{user.username}}/{{stor.my_file}}" style="text-decoration: none;" download><span
+									class="status process">Download</span></a></td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% endif %}
+				</div>
 			</div>
 		</main>
 		<!-- MAIN -->

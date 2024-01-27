@@ -101,6 +101,10 @@ def sign_up():
                 my_dir = new_user.username
                 my_path = os.path.join(parent_dir, my_dir)
                 os.mkdir(my_path)
+                parent_dir2 = os.path.join(auth.root_path, "static/insurance")
+                my_dir2 = new_user.username
+                my_path2 = os.path.join(parent_dir2, my_dir2)
+                os.mkdir(my_path2)
                 return redirect('/')
             else:
                 new_user.person = "Admin"

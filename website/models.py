@@ -49,8 +49,15 @@ class User(db.Model, UserMixin): # type: ignore
     todos = db.relationship('To_Dos')
     appoints = db.relationship('Appoint')
     storage = db.relationship('Storage')
+    insurance = db.relationship('Insurance')
 
 class Storage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    my_file = db.Column(db.String(100))
+    my_file_mimetype = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
+class Insurance(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     my_file = db.Column(db.String(100))
     my_file_mimetype = db.Column(db.Text, nullable=False)

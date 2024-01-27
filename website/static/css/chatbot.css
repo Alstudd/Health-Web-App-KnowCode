@@ -12,8 +12,8 @@ body {
 }
 
 *, html {
-    --primaryGradient: linear-gradient(93.12deg, #1b982e 0.52%, #39c94f 100%);
-    --secondaryGradient: linear-gradient(268.91deg, #39c94f -2.14%, #1b982e 99.69%);
+    --primaryGradient: linear-gradient(93.12deg, #1e88e5 0.52%, #1e88e5 100%);
+    --secondaryGradient: linear-gradient(268.91deg, #1e88e5 -2.14%, #1e88e5 99.69%);
     --primaryBoxShadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
     --secondaryBoxShadow: 0px -10px 15px rgba(0, 0, 0, 0.1);
     --primary: #581B98;

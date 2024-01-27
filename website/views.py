@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, Response
 from flask_login import login_required, current_user
-from .models import User, Upload, Diabetes, Heart, Park, Note, Appoint, To_Dos, Storage
+from .models import User, Upload, Diabetes, Heart, Park, Note, Appoint, To_Dos, Storage, Insurance
 from . import db
 from .diabetes import my_diabetes
 from .heart import my_heart
@@ -32,6 +32,10 @@ def test(dict_values):
     print(result) # Printing the new dictionary
     print(type(result))#this shows the json converted as a python dictionary
     return redirect(url_for('auth.login'))
+
+@views.route("/blockchainTable", methods=['POST', 'GET'])
+def blockchainTable():
+    return render_template("blockchainTable.html")
 
 @views.route("/chatbotSubmit", methods=['POST', 'GET'])
 def chatbotSubmit():
@@ -382,6 +386,10 @@ def admin():
 def store():
     return render_template("storage.html", user=current_user) 
 
+@views.route('/insurance')
+def insurance():
+    return render_template("insurance.html", user=current_user) 
+
 @views.route('/fill_details', methods=['GET', 'POST'])
 def fill_details():
     if request.method == 'POST':
@@ -568,6 +576,23 @@ def upload():
             db.session.commit()
             return redirect('/storage')
 
+@views.route('/uploadInsuranceFile', methods=['POST', 'GET'])
+def uploadInsurance():
+    if request.method == 'POST':
+        my_file = request.files['image_file']
+        if not my_file:
+            return 'No file uploaded!', 400
+        else:
+            path2 = os.path.join(views.root_path, f"static/insurance/{current_user.username}")
+            result = secure_filename(my_file.filename)
+            fullpath2 = os.path.join(path2, result)
+            my_file.save(fullpath2)
+            my_file_mimetype = my_file.mimetype
+            store = Insurance(my_file=result, my_file_mimetype=my_file_mimetype, user_id=current_user.id)
+            db.session.add(store)
+            db.session.commit()
+            return redirect('/insurance')
+
 @views.route('/park', methods=['POST', 'GET'])
 def park():
     if request.method == 'POST':
@@ -673,6 +698,19 @@ def delete_store(id):
         return redirect('/storage')
     sto = Storage.query.filter_by(id=id).first()
     return render_template("storage.html", sto=sto, user=current_user)
+
+@views.route('/insurance_delete/<int:id>')
+def delete_insurance(id):
+    sto = Insurance.query.filter_by(id=id).first()
+    if sto.user_id == current_user.id:
+        my_path = os.path.join(views.root_path, f"static/insurance/{current_user.username}/{sto.my_file}")
+        if os.path.exists(my_path):
+            os.remove(my_path)
+        db.session.delete(sto)
+        db.session.commit()
+        return redirect('/insurance')
+    sto = Insurance.query.filter_by(id=id).first()
+    return render_template("insurance.html", sto=sto, user=current_user)
 
 @views.route('/appoint', methods=['GET', 'POST'])
 def appoint_html():

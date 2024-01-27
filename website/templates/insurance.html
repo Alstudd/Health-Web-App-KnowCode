@@ -1,0 +1,92 @@
+{% extends 'base2.html' %}
+{% block extra_css2 %}
+<link rel="stylesheet" href="static/css/fill_details.css">
+<link rel="stylesheet" href="static/css/home.css">
+<link rel=" stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+	integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock extra_css2 %}
+{% block title %} Insurance {% endblock title %}
+{% block insurance %} active {% endblock insurance %}
+{% block head1 %} Insurance {% endblock head1 %}
+{% block head2 %} Insurance {% endblock head2 %}
+{% block content %}
+<div class="container">
+    <h2>Health Insurance Plans</h2>
+</div>
+<div style="margin-top: 30px; margin-bottom: 30px;" class="container text-center">
+    <div class="d-flex">
+      <div class="card curves ms-3" style="width: 400px; padding-top: 30px; padding-bottom: 30px;">
+        <h3>TATA AIA</h3>
+        <img src="static/images/tata-aia.png" height="250px">
+        <button style="height: 50px; background-color: #1e88e5; padding-left:25px; padding-right:25px;" class=""><a href="#" class="contact_link"
+            style="color: white; text-decoration: none; font-size: 18px; border-radius:15%;">Get Details</a></button>
+      </div>
+      <div class="card curves ms-3" style="width: 400px; padding-top: 30px; padding-bottom: 30px;">
+        <h3>MAX Life</h3>
+        <img src="static/images/max-life.svg" height="250px">
+        <button style="height: 50px; background-color: #1e88e5; padding-left:25px; padding-right:25px;" class=""><a href="#" class="contact_link"
+            style="color: white; text-decoration: none; font-size: 18px; border-radius:15%;">Get Details</a></button>
+      </div>
+      <div class="card curves ms-3" style="width: 400px; padding-top: 30px; padding-bottom: 30px;">
+        <h3>ICICI</h3>
+        <img src="static/images/crystal-ball.gif" height="250px">
+        <button style="height: 50px; background-color: #1e88e5; padding-left:25px; padding-right:25px;" class=""><a href="#" class="contact_link"
+            style="color: white; text-decoration: none; font-size: 18px; border-radius:15%;">Get Details</a></button>
+      </div>
+    </div>
+  </div>
+<div class="my-5 container">
+	<button type="button" class="btn bg-primary text-white px-3 shadow" id="utPic">
+		<i class="fas fa-file-upload mr-2"></i>Upload Files
+	</button>
+	<form id="uploadFile" method="post" action="/uploadInsuranceFile" enctype="multipart/form-data">
+		<input type="hidden" name="_token" :value="token">
+		<input id="files" name="image_file" type="file" multiple hidden>
+	</form>
+</div>
+<div class="container my-3">
+    <h2>Your Policy Documents</h2>
+    {% if user.insurance|length == 0 %}
+    <div class="alert alert-primary" role="alert">
+        No Files found. Add your files now!
+    </div>
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">SNo</th>
+                <th scope="col">Filename</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for st in user.insurance %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{st.my_file}}</td>
+                <td>
+                    <a href="static/insurance/{{user.username}}/{{st.my_file}}" download><button type="button"
+                            class="btn btn-primary btn-sm mx-1">Download</button></a>
+                    <a href="/store_delete/{{st.id}}"><button type="button"
+                            class="btn btn-primary btn-sm mx-1">Delete</button></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+{% endblock content %}
+{% block extra_js2 %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/storage.js') }}"></script>
+{% endblock extra_js2 %}
