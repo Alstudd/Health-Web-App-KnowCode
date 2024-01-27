@@ -21,6 +21,13 @@ import ssl
 from dotenv import load_dotenv
 load_dotenv()
 
+from web3 import Web3
+from solcx import compile_standard, install_solc
+
+from .readData import blockchainData, transaction
+
+from datetime import datetime, timedelta
+
 views = Blueprint('views', __name__)
 
 @views.route('/test/<string:dict_values>', methods=['POST'])
@@ -33,9 +40,17 @@ def test(dict_values):
     print(type(result))#this shows the json converted as a python dictionary
     return redirect(url_for('auth.login'))
 
+
+def convert_unix_to_indian(unix_timestamp):
+    utc_datetime = datetime.utcfromtimestamp(unix_timestamp)
+    indian_datetime = utc_datetime + timedelta(hours=5, minutes=30)
+    indian_time_date = indian_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    return indian_time_date
+
 @views.route("/blockchainTable", methods=['POST', 'GET'])
 def blockchainTable():
-    return render_template("blockchainTable.html")
+    blockData = blockchainData
+    return render_template("blockchainTable.html", blockData=blockData, convertUnixToIndian=convert_unix_to_indian)
 
 @views.route("/chatbotSubmit", methods=['POST', 'GET'])
 def chatbotSubmit():
@@ -190,6 +205,8 @@ def demo():
             for i in User.query.all():
                 # uname = str(i.username)
                 # ftype = str(i.filetype)
+                if i.id == 1:
+                    AdminID = i.unique
                 if i.id != 1:
                     global glob_name
                     users = os.path.join(views.root_path, f"static/profile_pics/{i.username}.{i.filetype}")
@@ -228,6 +245,8 @@ def demo():
                     if results[0] == True:
                         flash(f"It's a picture of {i.username}! Emergency Number: {i.emerNumber}, Emergency Email: {i.emerEmail}", category="success")
 
+                        userID = i.unique
+                        
                         email_sender = 'swasth249@gmail.com'
                         email_password = os.getenv("EMAIL_PASS")
                         email_receiver = str(i.emerEmail)
@@ -260,12 +279,13 @@ def demo():
                         # result = f'{glob_name}.{filetype}'
                         fullpath3 = os.path.join(path3, secure_filename(image_file.filename))
                         image_file.save(fullpath3)
+                        transaction(userID, AdminID)
                         break
                     else:
                         print("It's not a picture of me!")
                         glob_name = "Unknown"
                         continue
-    if glob_name == "Unknown":
+    if glob_name == "Unknown" or glob_name == "":
         flash("No Record!", category="error")
         return render_template("capture.html")
     else:
@@ -275,7 +295,7 @@ def demo():
 
 
 # global glob_name 
-# glob_name = "Alston"
+glob_name = ""
 
 @views.route('/capture')
 def capture():

@@ -13,28 +13,25 @@
     <table>
         <thead>
             <tr>
-                <td>Name</td>
+                <td>Time</td>
                 <td>AdminID</td>
                 <td>UserID</td>
             </tr>
         </thead>
         <tbody>
+            {% for tup in blockData %}
             <tr>
-                <td>David</td>
-                <td>Male</td>
-                <td>23</td>
+                {% for i in tup %}
+                    {% if loop.index == 1 %}
+                        <td id="time">{{convertUnixToIndian(i)}}</td>
+                    {% else %}
+                        <td>{{i}}</td>
+                    {% endif %}
+                {% endfor %}
             </tr>
-            <tr>
-                <td>Jessica</td>
-                <td>Female</td>
-                <td>47</td>
-            </tr>
-            <tr>
-                <td>Warren</td>
-                <td>Male</td>
-                <td>12</td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
+    
 </body>
 </html>

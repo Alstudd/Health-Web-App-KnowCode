@@ -10,10 +10,10 @@ def read_DATA():
     w3 = Web3(Web3.HTTPProvider(os.getenv("HTTP_URL")))
     # my_address = os.getenv("WALLET")
     # private_key = os.getenv("WALLET_PASSWORD")
-    with open("./address.json","r") as file:
+    with open("blockchain_backend/workingcode/address.json","r") as file:
         contract1=json.loads(file.read())
 
-    with open("./Abi.json","r") as file:
+    with open("blockchain_backend/workingcode/Abi.json","r") as file:
         abi1=file.read()
     abiContract=json.loads(abi1)
     recordsContract = w3.eth.contract(address=contract1["address"], abi=abiContract)
@@ -23,23 +23,23 @@ def read_DATA():
 
 
 blockchainData=read_DATA()
-print(blockchainData)
+# print(blockchainData)
 def transaction(userID,AdminID):
     w3 = Web3(Web3.HTTPProvider(os.getenv("HTTP_URL")))
     my_address = os.getenv("WALLET")
     private_key = os.getenv("WALLET_PASSWORD")
     address1=str(userID)
     address2=str(AdminID)
-    with open("./address.json","r") as file:
+    with open("blockchain_backend/workingcode/address.json","r") as file:
      contract1=json.loads(file.read())
-    with open("./Abi.json","r") as file:
+    with open("blockchain_backend/workingcode/Abi.json","r") as file:
      abi1=file.read()
     abiContract=json.loads(abi1)
     recordsContract = w3.eth.contract(address=contract1["address"], abi=abiContract)
-    with open("./nonce.json","r") as file:
+    with open("blockchain_backend/workingcode/nonce.json","r") as file:
      nonce1=json.loads(file.read())
     nonce=int(nonce1["nonce"])
-    with open("./nonce.json","w") as file:
+    with open("blockchain_backend/workingcode/nonce.json","w") as file:
      json.dump({"nonce":nonce+1}, file)
     greeting_transaction = recordsContract.functions.addItem(address1,address2).build_transaction(
         {
