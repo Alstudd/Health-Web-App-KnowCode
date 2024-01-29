@@ -279,7 +279,7 @@ def demo():
                         # result = f'{glob_name}.{filetype}'
                         fullpath3 = os.path.join(path3, secure_filename(image_file.filename))
                         image_file.save(fullpath3)
-                        transaction(userID, AdminID)
+                        # transaction(userID, AdminID)
                         break
                     else:
                         print("It's not a picture of me!")
